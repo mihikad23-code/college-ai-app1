@@ -17,19 +17,21 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 1. DIRECT KEY CONFIGURATION (HARDCODED)
+# 1. SECURE PRODUCTION SECRET LOOKUP
 # ==========================================
 try:
-    GEMINI_KEY = "AQ.Ab8RN6Lkn3_xuzg-zEM6aZxu4JmrLlAsETSY6a-KqaJ8AIVJSg"
+    GEMINI_API_KEY = "AQ.Ab8RN6Lkn3_xuzg-zEM6aZxu4JmrLlAsETSY6a-KqaJ8AIVJSg"
     SUPABASE_URL = "https://xeiwkcteindimxbcsoub.supabase.co"
-    SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc2MiOiJzdXBoYmFzZSIsInJlZiI6InhlaXdrY3RlaW5kaW14YmNzb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5ODk0NTUsImV4cCI6MjA5ODU2NTQ1NX0.KZYU22pRFDVu9MOAncExjozUJiCxqEgawLwMrRwBpbY"
 
-    if GEMINI_KEY and GEMINI_KEY != "PASTE_YOUR_GEMINI_API_KEY_HERE":
+# Head to your Supabase Project Settings API dashboard panel, click copy on the anon public key string, and paste it fully inside the quotation marks below:
+    SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlaXdrY3RlaW5kaW14YmNzb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5ODk0NTUsImV4cCI6MjA5ODU2NTQ1NX0.KZYU22pRFDVu9MOAncExjozUJiCxqEgawLwMrRwBpbY"
+   
+    if GEMINI_KEY:
         genai.configure(api_key=GEMINI_KEY)
     
     supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 except Exception as e:
-    st.error(f"Initialization Blocked: {e}")
+    st.error(f"Configuration Vault Missing Parameters: {e}")
 
 st.title("IvyPilot AI Portal")
 st.caption("Personalized Profile Analysis and Academic File Management Dashboard")
@@ -53,7 +55,7 @@ if not st.session_state.logged_in:
     with auth_col1:
         st.markdown("**OAuth Shortcuts:**")
         if st.button("🌐 Sign in with Google", use_container_width=True):
-            st.info("OAuth configurations must be registered directly in the Supabase Developer console profile to map active user streams.")
+            st.info("OAuth configurations must be registered directly in the Supabase Developer console profile.")
             
     with auth_col2:
         st.markdown("**Direct Email Portal:**")
