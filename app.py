@@ -12,7 +12,7 @@ import os
 GEMINI_KEY = "AQ.Ab8RN6Lkn3_xuzg-zEM6aZxu4JmrLlAsETSY6a-KqaJ8AIVJSg"
 SUPABASE_URL = "https://xeiwkcteindimxbcsoub.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlaXdrY3RlaW5kaW14YmNzb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5ODk0NTUsImV4cCI6MjA5ODU2NTQ1NX0.KZYU22pRFDVu9MOAncExjozUJiCxqEgawLwMrRwBpbY" # (Make sure your full key string stays inside these quotes)
-    if GEMINI_KEY and GEMINI_KEY != "PASTE_YOUR_GEMINI_API_KEY_HERE":
+if GEMINI_KEY and GEMINI_KEY != "PASTE_YOUR_GEMINI_API_KEY_HERE":
         genai.configure(api_key=GEMINI_KEY)
     
     # Direct initialization removes dependency on Streamlit Secrets management
