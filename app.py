@@ -15,20 +15,20 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Deep CSS Override to Fix Universal Contrast Issues
+# Strict Separation CSS Map (Forces White Boxes and Dark Text)
 st.markdown("""
     <style>
-    /* Force main app structural background to light grey */
+    /* 1. Main Page Canvas Background */
     .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
         background-color: #F8FAFC !important;
     }
     
-    /* UNIVERSAL FORCE COLOR: Turns absolutely all standard text blocks to dark slate */
-    * {
+    /* 2. Form Labels and Headings (Dark Slate text over light canvas) */
+    label, p, span, h1, h2, h3, .section-title {
         color: #0F172A !important;
     }
     
-    /* Top Header Banner Custom Style Container */
+    /* 3. Top Header Banner Styling */
     .header-banner {
         background: linear-gradient(135deg, #0F172A 0%, #1E40AF 100%);
         padding: 40px;
@@ -36,8 +36,7 @@ st.markdown("""
         margin-bottom: 35px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
-    
-    /* ISOLATE BANNER TEXT: Force header text elements to stay stark white */
+    /* Keep text inside header banner strictly white */
     .header-banner *, .main-title, .sub-title {
         color: #FFFFFF !important;
     }
@@ -52,7 +51,7 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
     
-    /* Section Separation Containers */
+    /* 4. Section Containers */
     .section-container {
         margin-top: 35px;
         margin-bottom: 15px;
@@ -60,29 +59,33 @@ st.markdown("""
     .section-title {
         font-size: 20px;
         font-weight: 600;
-        color: #0F172A !important;
         border-left: 4px solid #2563EB;
         padding-left: 12px;
     }
     
-    /* Input Fields and Select Dropdowns Framework Setup */
-    div[data-baseweb="select"], div[data-baseweb="input"], textarea, select, input {
-        border-radius: 8px !important;
+    /* 5. FORCE INPUT BOXES TO STAY STARK WHITE AND TYPING TEXT TO STAY DARK */
+    div[data-baseweb="select"], div[data-baseweb="input"], textarea, select, input,
+    div[data-baseweb="select"] *, div[data-baseweb="input"] * {
         background-color: #FFFFFF !important;
-        border: 1px solid #CBD5E1 !important;
-    }
-    
-    /* Ensure typing text color inside text areas and input boxes stays dark slate */
-    input, textarea, div[data-baseweb="select"] span, div[data-baseweb="input"] input {
         color: #0F172A !important;
     }
     
-    /* Submit Action Button Text Color Alignment */
+    /* Add a clean borders around the white input containers */
+    div[data-baseweb="select"], div[data-baseweb="input"], textarea {
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 8px !important;
+    }
+    
+    /* 6. Action Button Styling Fix */
+    button[kind="primary"] {
+        background-color: #2563EB !important;
+        border: none !important;
+    }
     button[kind="primary"] p {
         color: #FFFFFF !important;
     }
     
-    /* AI Strategy Output Block Formatting */
+    /* 7. AI Output Box Formatting */
     div.stMarkdown blockquote {
         background-color: #FFFFFF !important;
         border-left: 4px solid #2563EB !important;
