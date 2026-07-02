@@ -10,7 +10,7 @@ import os
 
 GEMINI_KEY = st.secrets.get("AQ.Ab8RN6Lkn3_xuzg-zEM6aZxu4JmrLlAsETSY6a-KqaJ8AIVJSg", "")
 SUPABASE_URL = st.secrets.get("//xeiwkcteindimxbcsoub.supabase.co", "") 
-SUPABASE_KEY = st.secrets.get("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlaXdrY3RlaW5kaW14YmNzb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5ODk0NTUsImV4cCI6MjA5O
+SUPABASE_KEY = st.secrets.get("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlaXdrY3RlaW5kaW14YmNzb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5ODk0NTUsImV4cCI6MjA5ODU2NTQ1NX0.KZYU22pRFDVu9MOAncExjozUJiCxqEgawLwMrRwBpbY","")
 
 try:
     if GEMINI_KEY and GEMINI_KEY != "PASTE_YOUR_GEMINI_API_KEY_HERE":
