@@ -15,20 +15,15 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Strict Separation CSS Map (Forces White Boxes and Dark Text)
+# Bulletproof Layout CSS Map (Ensures dark text everywhere)
 st.markdown("""
     <style>
-    /* 1. Main Page Canvas Background */
+    /* Force main app background to light grey */
     .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
         background-color: #F8FAFC !important;
     }
     
-    /* 2. Form Labels and Headings (Dark Slate text over light canvas) */
-    label, p, span, h1, h2, h3, .section-title {
-        color: #0F172A !important;
-    }
-    
-    /* 3. Top Header Banner Styling */
+    /* Top Header Banner styling */
     .header-banner {
         background: linear-gradient(135deg, #0F172A 0%, #1E40AF 100%);
         padding: 40px;
@@ -36,8 +31,7 @@ st.markdown("""
         margin-bottom: 35px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
-    /* Keep text inside header banner strictly white */
-    .header-banner *, .main-title, .sub-title {
+    .header-banner * {
         color: #FFFFFF !important;
     }
     .main-title {
@@ -51,7 +45,7 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
     
-    /* 4. Section Containers */
+    /* Section Separation Headings */
     .section-container {
         margin-top: 35px;
         margin-bottom: 15px;
@@ -59,24 +53,31 @@ st.markdown("""
     .section-title {
         font-size: 20px;
         font-weight: 600;
+        color: #0F172A !important;
         border-left: 4px solid #2563EB;
         padding-left: 12px;
     }
     
-    /* 5. FORCE INPUT BOXES TO STAY STARK WHITE AND TYPING TEXT TO STAY DARK */
-    div[data-baseweb="select"], div[data-baseweb="input"], textarea, select, input,
-    div[data-baseweb="select"] *, div[data-baseweb="input"] * {
-        background-color: #FFFFFF !important;
-        color: #0F172A !important;
+    /* Standard Text Labels and input descriptions */
+    label, p, span, div[data-testid="stWidgetLabel"] p {
+        color: #1E293B !important;
+        font-weight: 500 !important;
     }
     
-    /* Add a clean borders around the white input containers */
-    div[data-baseweb="select"], div[data-baseweb="input"], textarea {
+    /* Force input fields to be stark white boxes with dark typing text */
+    div[data-baseweb="select"], div[data-baseweb="input"], textarea, select, input {
+        background-color: #FFFFFF !important;
+        color: #0F172A !important;
         border: 1px solid #CBD5E1 !important;
         border-radius: 8px !important;
     }
     
-    /* 6. Action Button Styling Fix */
+    /* Dropdown option text fix */
+    div[data-baseweb="select"] * {
+        color: #0F172A !important;
+    }
+    
+    /* Primary Submit Action Button Text Alignment */
     button[kind="primary"] {
         background-color: #2563EB !important;
         border: none !important;
@@ -85,21 +86,22 @@ st.markdown("""
         color: #FFFFFF !important;
     }
     
-    /* 7. AI Output Box Formatting */
-    div.stMarkdown blockquote {
-        background-color: #FFFFFF !important;
-        border-left: 4px solid #2563EB !important;
-        padding: 24px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    /* UNIVERSAL OUTPUT CONTAINER: Forces all AI text results to be dark slate gray */
+    .ai-output-box, .ai-output-box *, .ai-output-box p, .ai-output-box h1, .ai-output-box h2, .ai-output-box h3, .ai-output-box li {
+        color: #0F172A !important;
     }
-    div.stMarkdown blockquote * {
-        color: #1E293B !important;
+    .ai-output-box {
+        background-color: #FFFFFF !important;
+        padding: 30px;
+        border-radius: 8px;
+        border: 1px solid #E2E8F0 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        margin-top: 20px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Application Header HTML
+# Application Header
 st.markdown("""
     <div class="header-banner">
         <div class="main-title">IvyPilot AI</div>
@@ -211,17 +213,13 @@ if st.button("Analyze Profile & Generate Admissions Strategy", type="primary"):
             - Personal Interests/Research: {core_passions}
             - Target Universities: {dream_colleges}
 
-            STRICT CONSTRAINT: DO NOT USE ANY EMOJIS IN YOUR RESPONSE. Use clear, plain markdown headers for your output.
+            STRICT CONSTRAINT: DO NOT USE ANY EMOJIS IN YOUR RESPONSE. Use clear plain text layout.
 
             ### 1. Profile Strength Assessment
             Evaluate how competitive this profile is right now for their target major and locations. Highlight their unique strengths (such as building resource tools, independent web projects, or specific subject mastery).
 
             ### 2. College Categorization (Reach, Match, Safety)
-            Break down the student's target universities into:
-            - Reach Options (Highly competitive, requiring extra profile building)
-            - Match Options (Realistic targets that align well with their current track)
-            - Safety Options (High probability choices)
-            If the list is unbalanced, suggest alternative choices that fit their major and location goals.
+            Break down the student's target universities into Reach Options, Match Options, and Safety Options. If the list is unbalanced, suggest alternative choices that fit their major and location goals.
 
             ### 3. Step-by-Step Roadmap for {student_grade}
             Provide concrete, actionable goals tailored exactly for a student in {student_grade} to build their profile over the coming years:
@@ -236,7 +234,9 @@ if st.button("Analyze Profile & Generate Admissions Strategy", type="primary"):
                 
                 st.success("Analysis complete.")
                 st.markdown("---")
-                st.markdown(response.text)
+                
+                # Wrapped inside an explicit HTML safe-zone container to lock the dark text colors
+                st.markdown(f'<div class="ai-output-box">{response.text}</div>', unsafe_allow_html=True)
                 st.markdown("---")
                 
             except Exception as e:
