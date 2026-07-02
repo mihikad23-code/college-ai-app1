@@ -3,23 +3,6 @@ import google.generativeai as genai
 from supabase import create_client, Client
 import os
 
-# ==========================================
-# 1. DIRECT KEY CONFIGURATION (HARDCODED)
-# ==========================================
-# Erase st.secrets entirely. Paste your string values directly inside the quotation marks below.
-
-# Clear out the old lines completely and paste this exact block:
-GEMINI_KEY = "AQ.Ab8RN6Lkn3_xuzg-zEM6aZxu4JmrLlAsETSY6a-KqaJ8AIVJSg"
-SUPABASE_URL = "https://xeiwkcteindimxbcsoub.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlaXdrY3RlaW5kaW14YmNzb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5ODk0NTUsImV4cCI6MjA5ODU2NTQ1NX0.KZYU22pRFDVu9MOAncExjozUJiCxqEgawLwMrRwBpbY" # (Make sure your full key string stays inside these quotes)
-if GEMINI_KEY and GEMINI_KEY != "PASTE_YOUR_GEMINI_API_KEY_HERE":
-        genai.configure(api_key=GEMINI_KEY)
-    
-    # Direct initialization removes dependency on Streamlit Secrets management
-    supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-except Exception as e:
-    st.error(f"Initialization Blocked: {e}")
-
 st.set_page_config(page_title="IvyPilot Portal", layout="centered", initial_sidebar_state="auto")
 
 # Premium Text Contrast Overrides
@@ -32,6 +15,21 @@ st.markdown("""
     div[data-testid="stNotification"] p { color: #0F172A !important; }
     </style>
 """, unsafe_allow_html=True)
+
+# ==========================================
+# 1. DIRECT KEY CONFIGURATION (HARDCODED)
+# ==========================================
+try:
+    GEMINI_KEY = "AQ.Ab8RN6Lkn3_xuzg-zEM6aZxu4JmrLlAsETSY6a-KqaJ8AIVJSg"
+    SUPABASE_URL = "https://xeiwkcteindimxbcsoub.supabase.co"
+    SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc2MiOiJzdXBoYmFzZSIsInJlZiI6InhlaXdrY3RlaW5kaW14YmNzb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5ODk0NTUsImV4cCI6MjA5ODU2NTQ1NX0.KZYU22pRFDVu9MOAncExjozUJiCxqEgawLwMrRwBpbY"
+
+    if GEMINI_KEY and GEMINI_KEY != "PASTE_YOUR_GEMINI_API_KEY_HERE":
+        genai.configure(api_key=GEMINI_KEY)
+    
+    supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+except Exception as e:
+    st.error(f"Initialization Blocked: {e}")
 
 st.title("IvyPilot AI Portal")
 st.caption("Personalized Profile Analysis and Academic File Management Dashboard")
