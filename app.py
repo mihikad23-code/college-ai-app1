@@ -15,37 +15,44 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Professional UI Design & Bulletproof Dark Text Color Fixes
+# Deep CSS Override to Fix Universal Contrast Issues
 st.markdown("""
     <style>
-    /* Main Background */
-    .stApp {
+    /* Force main app structural background to light grey */
+    .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
         background-color: #F8FAFC !important;
     }
     
-    /* Top Header Banner */
+    /* UNIVERSAL FORCE COLOR: Turns absolutely all standard text blocks to dark slate */
+    * {
+        color: #0F172A !important;
+    }
+    
+    /* Top Header Banner Custom Style Container */
     .header-banner {
         background: linear-gradient(135deg, #0F172A 0%, #1E40AF 100%);
         padding: 40px;
         border-radius: 12px;
         margin-bottom: 35px;
-        color: #FFFFFF !important;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* ISOLATE BANNER TEXT: Force header text elements to stay stark white */
+    .header-banner *, .main-title, .sub-title {
+        color: #FFFFFF !important;
     }
     .main-title {
         font-size: 36px;
         font-weight: 700;
         margin-bottom: 6px;
-        color: #FFFFFF !important;
     }
     .sub-title {
         font-size: 15px;
         font-weight: 400;
-        color: #93C5FD !important;
         letter-spacing: 0.5px;
     }
     
-    /* Section Headings */
+    /* Section Separation Containers */
     .section-container {
         margin-top: 35px;
         margin-bottom: 15px;
@@ -58,25 +65,24 @@ st.markdown("""
         padding-left: 12px;
     }
     
-    /* FORCE ALL TEXT, LABELS, INPUT TEXT, AND DROPDOWN TEXT TO BE DARK SLATE */
-    html, body, [data-testid="stAppViewContainer"], .stApp, label, p, span, div, input, textarea, select, 
-    .stSelectbox, .stTextInput, .stTextArea, div[data-baseweb="select"] *, div[data-baseweb="input"] * {
-        color: #0F172A !important;
-    }
-    
-    /* Keep title text inside the dark header banner white */
-    .header-banner *, .main-title, .sub-title {
-        color: #FFFFFF !important;
-    }
-    
-    /* Input Box Structural Styles */
-    div[data-baseweb="select"], div[data-baseweb="input"], textarea {
+    /* Input Fields and Select Dropdowns Framework Setup */
+    div[data-baseweb="select"], div[data-baseweb="input"], textarea, select, input {
         border-radius: 8px !important;
         background-color: #FFFFFF !important;
         border: 1px solid #CBD5E1 !important;
     }
     
-    /* AI Output Card Styling */
+    /* Ensure typing text color inside text areas and input boxes stays dark slate */
+    input, textarea, div[data-baseweb="select"] span, div[data-baseweb="input"] input {
+        color: #0F172A !important;
+    }
+    
+    /* Submit Action Button Text Color Alignment */
+    button[kind="primary"] p {
+        color: #FFFFFF !important;
+    }
+    
+    /* AI Strategy Output Block Formatting */
     div.stMarkdown blockquote {
         background-color: #FFFFFF !important;
         border-left: 4px solid #2563EB !important;
@@ -90,7 +96,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Application Header
+# Application Header HTML
 st.markdown("""
     <div class="header-banner">
         <div class="main-title">IvyPilot AI</div>
@@ -99,7 +105,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. EXPANDED STRATEGY FIELDS
+# 2. STRATEGY FRAMEWORK INPUT FIELDS
 # ==========================================
 
 st.markdown('<div class="section-container"><div class="section-title">1. Academic Framework Details</div></div>', unsafe_allow_html=True)
