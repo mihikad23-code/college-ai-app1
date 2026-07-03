@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 st.set_page_config(page_title="IvyPilot Portal", layout="centered", initial_sidebar_state="auto")
 
-# Premium Ultra-Dark High-Contrast Theme (Enforcing 100% White Text Everywhere)
+# Premium Ultra-Dark High-Contrast Theme (Enforcing readable options across drop-downs)
 st.markdown("""
     <style>
     /* Global background setup */
@@ -20,12 +20,18 @@ st.markdown("""
         color: #FFFFFF !important;
         border: 1px solid #475569 !important;
     }
-    /* FORCE drop-down selection box values and placeholder elements to be white */
-    div[data-baseweb="select"] * {
+    /* Drop-down selection box values (closed state) */
+    div[data-baseweb="select"] div {
         color: #FFFFFF !important;
     }
-    div[data-baseweb="popover"] *, div[role="listbox"] * {
-        color: #0F172A !important; /* Kept dark purely inside the expanded click-menu so options are visible against white dropdown paper */
+    /* TARGETED FIX FOR EXPANDED DROPDOWN MENUS: Forces dark dropdown boxes with clean white text options */
+    div[data-baseweb="popover"] ul, div[role="listbox"], div[role="listbox"] li {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+    }
+    /* Ensure hover states inside dropdown list remain clearly distinguishable */
+    div[role="listbox"] li:hover {
+        background-color: #334155 !important;
     }
     /* Primary action button styling */
     button[kind="primary"] {
@@ -62,7 +68,7 @@ st.markdown("---")
 # Section 1: Academic Dataset
 st.markdown('<div class="form-card">', unsafe_allow_html=True)
 st.subheader("📊 Academic Metrics Dataset")
-col1, col2 = col1, col2 = st.columns(2)
+col1, col2 = st.columns(2)
 with col1:
     student_grade = st.selectbox("Current Grade Level", ["Grade 8", "Grade 9", "Grade 10", "Grade 11 / IB1", "Grade 12 / IB2"])
     academic_system = st.selectbox("Current Curriculum Framework", ["Cambridge (IGCSE/Checkpoint)", "IB Diploma", "US High School Diploma", "CBSE / ICSE", "Other"])
@@ -98,7 +104,6 @@ if st.button("Execute Strategic Admissions Analysis", type="primary"):
         st.warning("Incomplete Data: Please complete your Grade Metrics, Target Major, and Target Colleges to continue.")
     else:
         with st.spinner("Compiling profile strategy layers..."):
-            # Rigorous prompt constraint to stop assumptions regarding future high school tracks
             analysis_prompt = (
                 f"You are a premium, highly objective global admissions consultant evaluating a profile context.\n\n"
                 f"Core Profile Parameters:\n"
@@ -114,9 +119,9 @@ if st.button("Execute Strategic Admissions Analysis", type="primary"):
                 f"- Core Interests/Passions: {core_passions}\n"
                 f"- Listed Target Universities: {dream_colleges}\n\n"
                 f"Strict Directives for Analysis:\n"
-                f"1. DO NOT assume the user will transition to Cambridge A-Levels for high school simply because they are doing IGCSE or Checkpoint now. They may switch to IB DP or other systems. Evaluate ONLY the current status.\n"
-                f"2. Avoid making qualitative assumptions or extrapolations about missing details. Stick exactly to the stated inputs to ensure high analytical accuracy.\n"
-                f"3. Frame the entire analysis around how their current baseline sets them up for their stated career track ({target_major}).\n\n"
+                f"1. DO NOT assume or declare what curriculum system the user will use for high school (such as A-Levels or IB DP) simply because they are currently completing Grade 8 under Cambridge Checkpoint/IGCSE. Evaluate their current options and profile standing strictly at their current baseline.\n"
+                f"2. Avoid making qualitative leaps, narrative assumptions, or extrapolations about unstated elements. Keep predictions strictly analytical and grounded purely in the user's explicit textual data.\n"
+                f"3. Evaluate how their current subject selection and profile trajectory position them relative to their stated focus area ({target_major}).\n\n"
                 f"Structure your response with clear Markdown Headers (#, ##, ###):\n"
                 f"- Profile Competitive Position Analysis\n"
                 f"- Curriculum Subject Alignment Evaluation\n"
