@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 st.set_page_config(page_title="IvyPilot Portal", layout="centered", initial_sidebar_state="auto")
 
-# Premium Ultra-Dark High-Contrast Theme (Enforcing readable options across drop-downs)
+# Premium Ultra-Dark High-Contrast Theme (Enforces readability across all dynamic elements)
 st.markdown("""
     <style>
     /* Global background setup */
@@ -24,12 +24,12 @@ st.markdown("""
     div[data-baseweb="select"] div {
         color: #FFFFFF !important;
     }
-    /* TARGETED FIX FOR EXPANDED DROPDOWN MENUS: Forces dark dropdown boxes with clean white text options */
+    /* TARGETED DROPDOWN MENU FIX: Forces dark dropdown boxes with clean white text options */
     div[data-baseweb="popover"] ul, div[role="listbox"], div[role="listbox"] li {
         background-color: #1E293B !important;
         color: #FFFFFF !important;
     }
-    /* Ensure hover states inside dropdown list remain clearly distinguishable */
+    /* Ensure hover states inside dropdown list remain clearly visible */
     div[role="listbox"] li:hover {
         background-color: #334155 !important;
     }
@@ -62,71 +62,72 @@ except Exception as e:
     st.error("Configuration Key Missing: Please update your GEMINI_API_KEY inside the Streamlit Advanced Secrets panel.")
 
 st.title("IvyPilot AI Portal")
-st.caption("Personalized Strategy Engine and Profile Performance Analytics Workspace")
+st.caption("Universal Strategic Admissions Profile Analyzer")
 st.markdown("---")
 
 # Section 1: Academic Dataset
 st.markdown('<div class="form-card">', unsafe_allow_html=True)
-st.subheader("📊 Academic Metrics Dataset")
+st.subheader("📊 Academic Baseline")
 col1, col2 = st.columns(2)
 with col1:
-    student_grade = st.selectbox("Current Grade Level", ["Grade 8", "Grade 9", "Grade 10", "Grade 11 / IB1", "Grade 12 / IB2"])
-    academic_system = st.selectbox("Current Curriculum Framework", ["Cambridge (IGCSE/Checkpoint)", "IB Diploma", "US High School Diploma", "CBSE / ICSE", "Other"])
+    student_grade = st.text_input("Current Grade / Year Level", placeholder="e.g., Grade 8, Year 9, Grade 11 / IB1")
+    academic_system = st.text_input("Current Educational Framework", placeholder="e.g., Cambridge, IB, National Curriculum, US High School")
 with col2:
-    gpa_metrics = st.text_input("Current School Grades / Performance Indices", placeholder="e.g., Straight A*s, 90%+")
-    test_scores = st.text_input("External Standardized Benchmarks", placeholder="e.g., Checkpoint results, SAT diagnostics")
+    gpa_metrics = st.text_input("Academic Performance / Marks Baseline", placeholder="e.g., Straight A*s, 3.9 GPA, 95%")
+    test_scores = st.text_input("Standardized Testing / External Benchmarks", placeholder="e.g., Diagnostic metrics, Checkpoints, SAT, APs")
     
-subjects_taken = st.text_input("Subjects Currently Taken or Planned", placeholder="e.g., Math, Economics, Coordinated Sciences")
+subjects_taken = st.text_area("Current Course Load / Subject Selection", placeholder="List all subjects currently being taken or confirmed for the upcoming term...")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Section 2: Goals
 st.markdown('<div class="form-card">', unsafe_allow_html=True)
-st.subheader("🎯 Target Configurations")
+st.subheader("🎯 Academic & Professional Targets")
 col3, col4 = st.columns(2)
 with col3:
-    target_major = st.text_input("Intended Career Track / Area of Focus", placeholder="e.g., Corporate Finance / Global Banking")
+    target_major = st.text_input("Intended Focus / Major / Career Track", placeholder="e.g., Corporate Finance, Computer Science, Undecided")
 with col4:
-    target_countries = st.text_input("Geographic Target Destinations", placeholder="e.g., UK, US, Singapore")
+    target_countries = st.text_input("Geographic Destinations", placeholder="e.g., UK, US, Canada, Domestic, Global")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Section 3: Portfolio
 st.markdown('<div class="form-card">', unsafe_allow_html=True)
-st.subheader("💡 Qualitative Parameters Portfolio")
-activities = st.text_area("Extracurricular Activities & Initiatives", placeholder="List school clubs, competitions, leadership dynamics...")
-independent_projects = st.text_area("Independent Research & Web Platforms Launched", placeholder="Detail resource tools, databases, or web apps you host independently...")
-core_passions = st.text_area("Intrinsic Passions & Outside Interests", placeholder="What specialized areas do you track outside of school constraints?")
-dream_colleges = st.text_area("Target Institution Preferences", placeholder="List specific higher-education profiles or colleges...")
+st.subheader("💡 Qualitative Parameters & Engagement")
+activities = st.text_area("Extracurricular Activities & Leadership Profile", placeholder="Detail school clubs, community initiatives, sports, or regular commitments...")
+independent_projects = st.text_area("Independent Projects / Developed Media / Platforms", placeholder="Detail any personal sites, research papers, resource tools, or independent creations...")
+core_passions = st.text_area("Intellectual Passions & Self-Directed Interests", placeholder="What specific topics or areas do you study, track, or read about purely out of personal curiosity?")
+dream_colleges = st.text_area("Target Institutions / Profiles", placeholder="List specific higher-education colleges or general university profiles you are aiming for...")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Run Strategic Analysis
-if st.button("Execute Strategic Admissions Analysis", type="primary"):
+if st.button("Execute Strategic Profile Analysis", type="primary"):
     if not gpa_metrics or not target_major or not dream_colleges:
-        st.warning("Incomplete Data: Please complete your Grade Metrics, Target Major, and Target Colleges to continue.")
+        st.warning("Data Missing: Please populate the performance metrics, intended focus, and target institution fields to generate an accurate analysis.")
     else:
         with st.spinner("Compiling profile strategy layers..."):
+            # A perfectly balanced, objective prompt blueprint that acts purely on input parameters
             analysis_prompt = (
-                f"You are a premium, highly objective global admissions consultant evaluating a profile context.\n\n"
-                f"Core Profile Parameters:\n"
-                f"- Current Student Grade: {student_grade}\n"
-                f"- Current Curriculum Framework: {academic_system}\n"
-                f"- Academic Marks: {gpa_metrics}\n"
-                f"- Current Course Subjects: {subjects_taken}\n"
-                f"- Benchmark/Test History: {test_scores}\n"
-                f"- Target Concentration/Career Track: {target_major}\n"
-                f"- Geographic Focus: {target_countries}\n"
+                f"You are an expert, highly objective global admissions consultant evaluating a student's profile baseline.\n\n"
+                f"Profile Input Parameters:\n"
+                f"- Academic Level: {student_grade}\n"
+                f"- Educational System: {academic_system}\n"
+                f"- Academic Standings/Grades: {gpa_metrics}\n"
+                f"- Subject Portfolio: {subjects_taken}\n"
+                f"- Testing Benchmarks: {test_scores}\n"
+                f"- Stated Core Focus/Career Intent: {target_major}\n"
+                f"- Targeted Geographic Regions: {target_countries}\n"
                 f"- Activities Data: {activities}\n"
-                f"- Web Projects/Platforms Launched: {independent_projects}\n"
-                f"- Core Interests/Passions: {core_passions}\n"
-                f"- Listed Target Universities: {dream_colleges}\n\n"
-                f"Strict Directives for Analysis:\n"
-                f"1. DO NOT assume or declare what curriculum system the user will use for high school (such as A-Levels or IB DP) simply because they are currently completing Grade 8 under Cambridge Checkpoint/IGCSE. Evaluate their current options and profile standing strictly at their current baseline.\n"
-                f"2. Avoid making qualitative leaps, narrative assumptions, or extrapolations about unstated elements. Keep predictions strictly analytical and grounded purely in the user's explicit textual data.\n"
-                f"3. Evaluate how their current subject selection and profile trajectory position them relative to their stated focus area ({target_major}).\n\n"
-                f"Structure your response with clear Markdown Headers (#, ##, ###):\n"
-                f"- Profile Competitive Position Analysis\n"
-                f"- Curriculum Subject Alignment Evaluation\n"
-                f"- Initial Institutional Competitive Mapping (Reach / Match / Safety perspective based strictly on current metrics)\n"
-                f"- Tactical Recommendations & Clear Milestones\n\n"
+                f"- Independent Work/Projects: {independent_projects}\n"
+                f"- Focus Areas/Passions: {core_passions}\n"
+                f"- Institutional Targets: {dream_colleges}\n\n"
+                f"Strict Parameters for Response:\n"
+                f"1. Evaluate the profile strictly as it stands today based on the precise text provided. Do not extrapolate, assume future high school paths, or guess subsequent graduation systems (e.g., do not predict A-Levels vs IB unless explicit in the text).\n"
+                f"2. Keep the advice highly objective, avoiding generic statements. Analyze how well their current course combinations, metrics, and qualitative actions line up with their specified career or academic path.\n"
+                f"3. Frame the feedback logically within their regional target context.\n\n"
+                f"Structure the final output precisely using these Markdown Headers (#, ##, ###):\n"
+                f"- Profile Evaluation & Current Standings\n"
+                f"- Curricular Alignment & Choice Assessment\n"
+                f"- Institutional Positioning Analysis\n"
+                f"- Strategic Milestones & Recommended Interventions\n\n"
                 f"Formatting Constraint: Output raw, clean markdown text. Absolutely zero emojis or icons are permitted anywhere."
             )
             
